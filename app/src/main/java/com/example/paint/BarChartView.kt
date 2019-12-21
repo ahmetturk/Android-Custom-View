@@ -8,12 +8,15 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
+import kotlin.random.Random
 
 class BarChartView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
+
+    private val barChartData: List<Float> = generateData()
 
     private val barPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
@@ -49,6 +52,7 @@ class BarChartView @JvmOverloads constructor(
 
         drawAxisLines(canvas)
         drawGuideLines(canvas)
+        drawBars(canvas)
     }
 
     private fun drawAxisLines(canvas: Canvas) {
@@ -62,6 +66,26 @@ class BarChartView @JvmOverloads constructor(
         for (i in 0..9) {
             val lineHeight = rect.top + (i * guideLineSpace)
             canvas.drawLine(rect.left, lineHeight, rect.right, lineHeight, guidePaint)
+        }
+    }
+
+    private fun drawBars(canvas: Canvas) {
+        val totalBarSpace = barSpace * (barChartData.size + 1)
+        val barWidth = (rect.right - rect.left - totalBarSpace) / barChartData.size
+        var left = rect.left + barSpace
+        var right = left + barWidth
+        barChartData.forEach {
+            val top = rect.top + (rect.height() * (1 - it))
+            canvas.drawRect(left, top, right, rect.bottom, barPaint)
+
+            left = right + barSpace
+            right = left + barWidth
+        }
+    }
+
+    private fun generateData(): List<Float> {
+        return List((5..15).random()) {
+            Random.nextFloat()
         }
     }
 }
