@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="bar_chart_axis_width">2dp</dimen>
+    <dimen name="bar_chart_line_width">1dp</dimen>
+    <dimen name="bar_chart_padding">8dp</dimen>
+    <dimen name="bar_chart_space">8dp</dimen>
+</resources>
