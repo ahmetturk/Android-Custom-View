@@ -26,9 +26,9 @@ class BarChartView @JvmOverloads constructor(
         strokeWidth = resources.getDimension(R.dimen.bar_chart_axis_width)
     }
 
-    private val linePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    private val guidePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
-        color = ContextCompat.getColor(context, R.color.bar_chart_line_color)
+        color = ContextCompat.getColor(context, R.color.bar_chart_guide_color)
         strokeWidth = resources.getDimension(R.dimen.bar_chart_line_width)
     }
 
@@ -48,10 +48,20 @@ class BarChartView @JvmOverloads constructor(
         rect.set(padding, padding, width - padding, height - padding)
 
         drawAxisLines(canvas)
+        drawGuideLines(canvas)
     }
 
     private fun drawAxisLines(canvas: Canvas) {
         canvas.drawLine(rect.left, rect.bottom, rect.left, rect.top, axisPaint)
         canvas.drawLine(rect.left, rect.bottom, rect.right, rect.bottom, axisPaint)
+    }
+
+    private fun drawGuideLines(canvas: Canvas) {
+        val guideLineSpace = (rect.bottom - rect.top) / 10
+
+        for (i in 0..9) {
+            val lineHeight = rect.top + (i * guideLineSpace)
+            canvas.drawLine(rect.left, lineHeight, rect.right, lineHeight, guidePaint)
+        }
     }
 }
