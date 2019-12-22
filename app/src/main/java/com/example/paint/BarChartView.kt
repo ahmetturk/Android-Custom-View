@@ -1,9 +1,7 @@
 package com.example.paint
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.RectF
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -53,6 +51,13 @@ class BarChartView @JvmOverloads constructor(
         drawAxisLines(canvas)
         drawGuideLines(canvas)
         drawBars(canvas)
+    }
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        barPaint.shader = LinearGradient(
+            0f, padding, 0f, h - padding,
+            Color.GREEN, Color.RED, Shader.TileMode.CLAMP
+        )
     }
 
     private fun drawAxisLines(canvas: Canvas) {
